@@ -7,21 +7,19 @@ public class ClanButton : MonoBehaviour
     [SerializeField] private GameObject _clanDashboard;
     [SerializeField] private GameObject _clanSearch;
     [SerializeField] private ClanDashboard _clan;
-    private bool _isPanelActive;
 
     public void OnClick()
     {
         if (CharacterTest._char._clan == null)
         {
-            _clanSearch.SetActive(!_isPanelActive);
+            _clanSearch.SetActive(!_clanSearch.activeSelf);
             _clanDashboard.SetActive(false);
         }
         else
         {
             _clanSearch.SetActive(false);
-            _clanDashboard.SetActive(!_isPanelActive);
+            _clanDashboard.SetActive(!_clanDashboard.activeSelf);
             _clan.UpdateClanInfo();
         }
-        _isPanelActive = !_isPanelActive;
     }
 }
