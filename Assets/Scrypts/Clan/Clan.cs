@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 public class Clan
@@ -36,6 +37,10 @@ public class Clan
     {
         _clanMemberList.Add(new ClanMember(_member, MemberRank.Peasant));
         _member.JoinClan(this);
+    }
+    public void RemoveMember(Character _member)
+    {
+        _clanMemberList.Remove(_clanMemberList.Find(x => x._character == _member));
     }
 
     public void SetRequirement(int level)

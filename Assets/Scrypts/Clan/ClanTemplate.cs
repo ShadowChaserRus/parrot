@@ -11,7 +11,6 @@ public class ClanTemplate : MonoBehaviour
     [SerializeField] private TMP_Text _clanName;
     [SerializeField] private TMP_Text _clanLeaderName;
     [SerializeField] private TMP_Text _clanMemberCount;
-
     private Clan _clan;
     private ClanSearchDashboard _clanSearchDashboard;
 
@@ -26,9 +25,8 @@ public class ClanTemplate : MonoBehaviour
         _clanSearchDashboard = dashboard;
     }
 
-    public void JoinClan()
+    public void OnJoinClick()
     {
-        _clan?.AddMember(CharacterTest._char);
-        _clanSearchDashboard.ClearSearch();
+        _clanSearchDashboard.JoinClan(_clan);
     }
 }

@@ -14,10 +14,13 @@ public class ClanDashboard : MonoBehaviour
     [SerializeField] private Transform _clanMemberListTransform;
     [SerializeField] private Button _leaveButton;
     [SerializeField] private Button _newClanButton;
+    [SerializeField] private GameObject _clanSearchPanel;
+    [SerializeField] private GameObject _clanPanel;
     private void Start()
     {
         _leaveButton.onClick.AddListener(CharacterTest._char.LeaveClan);
         _leaveButton.onClick.AddListener(UpdateClanInfo);
+        _leaveButton.onClick.AddListener(LeaveClan);
         UpdateClanInfo();
     }
 
@@ -61,5 +64,11 @@ public class ClanDashboard : MonoBehaviour
         {
             Destroy(member.gameObject);
         }
+    }
+
+    private void LeaveClan()
+    {
+        _clanPanel.SetActive(false);
+        _clanSearchPanel.SetActive(true);
     }
 }

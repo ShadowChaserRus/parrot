@@ -6,6 +6,8 @@ public class ClanSearchDashboard : MonoBehaviour
 {
     [SerializeField] private ClanTemplate _clanTemplatePrefab;
     [SerializeField] private Transform _clanListTransform;
+    [SerializeField] private GameObject _clanSearchPanel;
+    [SerializeField] private GameObject _clanPanel;
 
     public void Search()
     {
@@ -27,6 +29,14 @@ public class ClanSearchDashboard : MonoBehaviour
         {
             Destroy(template.gameObject);
         }
+    }
+
+    public void JoinClan(Clan _clan)
+    {
+        _clan?.AddMember(CharacterTest._char);
+        ClearSearch();
+        _clanSearchPanel.SetActive(false);
+        _clanPanel.SetActive(true);
     }
     
 }

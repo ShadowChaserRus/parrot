@@ -26,6 +26,7 @@ public class Character
 
     public void LeaveClan()
     {
+        _clan.RemoveMember(this);
         _clan = null;
     }
 
