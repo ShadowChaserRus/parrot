@@ -4603,6 +4603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca3a7ec86c398cc4cb11ef677b1c205b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clanDashboard: {fileID: 1119793812}
   _clanTemplatePrefab: {fileID: 4740053853212435095, guid: 4d8f5354cc0a1d84ab0fdfb342bd5af5, type: 3}
   _clanListTransform: {fileID: 2121268040}
   _clanSearchPanel: {fileID: 1678224420}

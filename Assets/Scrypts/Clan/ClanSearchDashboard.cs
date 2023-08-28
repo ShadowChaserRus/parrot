@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ClanSearchDashboard : MonoBehaviour
 {
+    [SerializeField] private ClanDashboard _clanDashboard;
     [SerializeField] private ClanTemplate _clanTemplatePrefab;
     [SerializeField] private Transform _clanListTransform;
     [SerializeField] private GameObject _clanSearchPanel;
@@ -35,6 +36,7 @@ public class ClanSearchDashboard : MonoBehaviour
     {
         _clan?.AddMember(CharacterTest._char);
         ClearSearch();
+        _clanDashboard.UpdateClanInfo();
         _clanSearchPanel.SetActive(false);
         _clanPanel.SetActive(true);
     }
