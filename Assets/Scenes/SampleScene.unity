@@ -1610,7 +1610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2547,6 +2547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrebaf: {fileID: 57861749042039534, guid: f420b3f97bd42f14787e724e2c67deef, type: 3}
+  _monsterPrebaf: {fileID: 6652095429585860943, guid: e19598fbd4eb63248b8bbdcbdd4e6e7c, type: 3}
 --- !u!1 &588087307
 GameObject:
   m_ObjectHideFlags: 0

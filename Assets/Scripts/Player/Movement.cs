@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float _speed = 2f;
-    private Cell _currentPosition;
+    [SerializeField] private Player _player;
+    [SerializeField] private float _baseSpeed = 2f;
+    private float _speedMultiplayer = 2f;
+    private float _speed;
+    public Cell _currentCell { get; private set; }
     private bool _isMoving;
+    public Direction direction { get; private set; } = new Direction();
     private Vector3 _distance;
     private Vector3 _currentPlayerPosition, _destinationPosition, _moveVector;
     public void SetPosition(Cell cell)
     {
-        _currentPosition = cell;
+        direction.SetDirection(1, 0);
+        _currentCell = cell;
+        _currentCell.SetAvalible(false);
+        _currentCell.SetPlayer(_player);
     }
     private void Update()
     {
         if (_isMoving)
         {
+            _speed = Input.GetKey(KeyCode.LeftShift) ? _baseSpeed * _speedMultiplayer : _baseSpeed;
             var deltaVector = _moveVector * _speed * Time.deltaTime;
             if (_distance.magnitude > deltaVector.magnitude)
             {
@@ -33,38 +41,42 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            if (_currentPosition.GetArrayY() + 1 <= EarthGrid.WorldGrid.GetLength(1) - 1)
+            direction.SetDirection(0, 1);
+            if (_currentCell.GetArrayY() + 1 <= EarthGrid.WorldGrid.GetLength(1) - 1
+            && EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1].isEmpty)
             {
                 Debug.Log("Вверх");
-
-                Move(EarthGrid.WorldGrid[_currentPosition.GetArrayX(), _currentPosition.GetArrayY() + 1]);
+                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1]);
             }
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            if (_currentPosition.GetArrayY() - 1 >= 0)
+            direction.SetDirection(0, -1);
+            if (_currentCell.GetArrayY() - 1 >= 0
+            && EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1].isEmpty)
             {
                 Debug.Log("Вниз");
-
-                Move(EarthGrid.WorldGrid[_currentPosition.GetArrayX(), _currentPosition.GetArrayY() - 1]);
+                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1]);
             }
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            if (_currentPosition.GetArrayX() - 1 >= 0)
+            direction.SetDirection(-1, 0);
+            if (_currentCell.GetArrayX() - 1 >= 0
+            && EarthGrid.WorldGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()].isEmpty)
             {
                 Debug.Log("Влево");
-
-                Move(EarthGrid.WorldGrid[_currentPosition.GetArrayX() - 1, _currentPosition.GetArrayY()]);
+                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()]);
             }
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            if (_currentPosition.GetArrayX() + 1 <= EarthGrid.WorldGrid.GetLength(0) - 1)
+            direction.SetDirection(1, 0);
+            if (_currentCell.GetArrayX() + 1 <= EarthGrid.WorldGrid.GetLength(0) - 1
+              && EarthGrid.WorldGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()].isEmpty)
             {
                 Debug.Log("Вправо");
-
-                Move(EarthGrid.WorldGrid[_currentPosition.GetArrayX() + 1, _currentPosition.GetArrayY()]);
+                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()]);
             }
         }
 
@@ -74,14 +86,27 @@ public class Movement : MonoBehaviour
     private void Move(Cell nextCell)
     {
         if (!nextCell.isEmpty) return;
-        // transform.position = nextCell.GetPosition();
-        _currentPlayerPosition = _currentPosition.GetPosition();
+        // _speed = Input.GetKey(KeyCode.LeftShift) ? _baseSpeed * _speedMultiplayer : _baseSpeed;
+        _currentPlayerPosition = _currentCell.GetPosition();
         _destinationPosition = nextCell.GetPosition();
         _moveVector = _destinationPosition - _currentPlayerPosition;
         _distance = _moveVector;
-        _currentPosition.SetAvalible(true);
-        _currentPosition = nextCell;
-        _currentPosition.SetAvalible(false);
+        _currentCell.SetAvalible(true);
+        _currentCell = nextCell;
+        _currentCell.SetAvalible(false);
+        _currentCell.SetPlayer(_player);
         _isMoving = true;
     }
+
+    public class Direction
+    {
+        public int x { get; private set; }
+        public int y { get; private set; }
+        public void SetDirection(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
 }

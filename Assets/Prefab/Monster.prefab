@@ -10,32 +10,35 @@ GameObject:
   m_Component:
   - component: {fileID: 6475730515024533795}
   - component: {fileID: 7413673529363334889}
-  - component: {fileID: -417212181158294543}
-  - component: {fileID: 57861749042039534}
-  - component: {fileID: -2899492586919557278}
+  - component: {fileID: 5150505962893412222}
   - component: {fileID: 4913725675853538222}
+  - component: {fileID: 6652095429585860943}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6475730515024533795
-Transform:
+--- !u!224 &6475730515024533795
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7773075954365963149}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &7413673529363334889
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -78,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.6226415, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.13572444, g: 0.19235265, b: 0.4716981, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -88,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-417212181158294543
+--- !u!114 &5150505962893412222
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,39 +100,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7773075954365963149}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d6c727d83106bd4982bc3d7592513df, type: 3}
+  m_Script: {fileID: 11500000, guid: fc80d2cd6f864f047b2b7d9745108cac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 57861749042039534}
-  _attack: {fileID: -2899492586919557278}
   _health: {fileID: 4913725675853538222}
---- !u!114 &57861749042039534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7773075954365963149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f230fde9ac1c344a8ce1975de1ff772, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _player: {fileID: -417212181158294543}
-  _speed: 3
---- !u!114 &-2899492586919557278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7773075954365963149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7853cc631b1570449a1a0cc1f97ebdea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movement: {fileID: 57861749042039534}
+  _movement: {fileID: 6652095429585860943}
 --- !u!114 &4913725675853538222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,3 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feda11a7ba8d5ed4084e6b566caebea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6652095429585860943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773075954365963149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5020dfe5273d5c44a82d243191616ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _monster: {fileID: 5150505962893412222}

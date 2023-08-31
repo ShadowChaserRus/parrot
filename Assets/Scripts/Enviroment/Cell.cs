@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cell
 {
+    public IDamageable _creature { get; private set; }
     public bool isEmpty { get; private set; } = true;
     private float x;
     private float y;
@@ -33,6 +34,13 @@ public class Cell
     public void SetAvalible(bool toggle)
     {
         isEmpty = toggle;
+        if (toggle) _creature = null;
+    }
+
+    public void SetPlayer(IDamageable creature)
+    {
+        _creature = creature;
+        isEmpty = false;
     }
 
 
