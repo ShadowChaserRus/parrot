@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Items
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 1897634183
+    locked: 0
+  - name: Items
+    uniqueID: 248004987
+    locked: 0
+  - name: Monster
+    uniqueID: 3455067969
+    locked: 0
+  - name: Player
+    uniqueID: 4152617103
+    locked: 0
+  - name: NPC
+    uniqueID: 161551613
     locked: 0

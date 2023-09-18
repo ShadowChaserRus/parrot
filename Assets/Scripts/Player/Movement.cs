@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    [SerializeField] private PlayerController _playerController;
+    [SerializeField] private Transform _vectorImage;
     [SerializeField] private Player _player;
     [SerializeField] private float _baseSpeed = 2f;
+    public Player Player => _player;
     private float _speedMultiplayer = 2f;
     private float _speed;
     public Cell _currentCell { get; private set; }
@@ -17,8 +20,7 @@ public class Movement : MonoBehaviour
     {
         direction.SetDirection(1, 0);
         _currentCell = cell;
-        _currentCell.SetAvalible(false);
-        _currentCell.SetPlayer(_player);
+        _currentCell.PutIn(_player);
     }
     private void Update()
     {
@@ -33,7 +35,7 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                transform.position += _distance;
+                transform.position = _currentCell.GetPosition();
                 _isMoving = false;
             }
             return;
@@ -42,41 +44,45 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             direction.SetDirection(0, 1);
-            if (_currentCell.GetArrayY() + 1 <= EarthGrid.WorldGrid.GetLength(1) - 1
-            && EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1].isEmpty)
+            _vectorImage.eulerAngles = new Vector3(0f, 0f, 90f);
+            if (_currentCell.GetArrayY() + 1 <= EarthGrid.Instance._cellGrid.GetLength(1) - 1
+            && EarthGrid.Instance._cellGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1].isEmpty)
             {
                 Debug.Log("Вверх");
-                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1]);
+                Move(EarthGrid.Instance._cellGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() + 1]);
             }
         }
         else if (Input.GetKey(KeyCode.S))
         {
             direction.SetDirection(0, -1);
+            _vectorImage.eulerAngles = new Vector3(0f, 0f, -90f);
             if (_currentCell.GetArrayY() - 1 >= 0
-            && EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1].isEmpty)
+            && EarthGrid.Instance._cellGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1].isEmpty)
             {
                 Debug.Log("Вниз");
-                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1]);
+                Move(EarthGrid.Instance._cellGrid[_currentCell.GetArrayX(), _currentCell.GetArrayY() - 1]);
             }
         }
         else if (Input.GetKey(KeyCode.A))
         {
             direction.SetDirection(-1, 0);
+            _vectorImage.eulerAngles = new Vector3(0f, 0f, 180f);
             if (_currentCell.GetArrayX() - 1 >= 0
-            && EarthGrid.WorldGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()].isEmpty)
+            && EarthGrid.Instance._cellGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()].isEmpty)
             {
                 Debug.Log("Влево");
-                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()]);
+                Move(EarthGrid.Instance._cellGrid[_currentCell.GetArrayX() - 1, _currentCell.GetArrayY()]);
             }
         }
         else if (Input.GetKey(KeyCode.D))
         {
             direction.SetDirection(1, 0);
-            if (_currentCell.GetArrayX() + 1 <= EarthGrid.WorldGrid.GetLength(0) - 1
-              && EarthGrid.WorldGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()].isEmpty)
+            _vectorImage.eulerAngles = new Vector3(0f, 0f, 0f);
+            if (_currentCell.GetArrayX() + 1 <= EarthGrid.Instance._cellGrid.GetLength(0) - 1
+              && EarthGrid.Instance._cellGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()].isEmpty)
             {
                 Debug.Log("Вправо");
-                Move(EarthGrid.WorldGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()]);
+                Move(EarthGrid.Instance._cellGrid[_currentCell.GetArrayX() + 1, _currentCell.GetArrayY()]);
             }
         }
 
@@ -85,17 +91,28 @@ public class Movement : MonoBehaviour
 
     private void Move(Cell nextCell)
     {
-        if (!nextCell.isEmpty) return;
-        // _speed = Input.GetKey(KeyCode.LeftShift) ? _baseSpeed * _speedMultiplayer : _baseSpeed;
-        _currentPlayerPosition = _currentCell.GetPosition();
-        _destinationPosition = nextCell.GetPosition();
-        _moveVector = _destinationPosition - _currentPlayerPosition;
-        _distance = _moveVector;
-        _currentCell.SetAvalible(true);
-        _currentCell = nextCell;
-        _currentCell.SetAvalible(false);
-        _currentCell.SetPlayer(_player);
-        _isMoving = true;
+        if (nextCell.PutIn(_player))
+        {
+            _currentPlayerPosition = _currentCell.GetPosition();
+            _destinationPosition = nextCell.GetPosition();
+            _moveVector = _destinationPosition - _currentPlayerPosition;
+            _distance = _moveVector;
+            _currentCell.SetAvalible();
+            _currentCell = nextCell;
+            _isMoving = true;
+
+            _playerController.CloseSomething();
+        }
+    }
+
+    public void Teleport(Vector2 to)
+    {
+        if (_isMoving) return;
+        _currentCell.SetAvalible();
+        _currentCell = EarthGrid.Instance._cellGrid[(int)to.x, (int)to.y];
+        _currentCell.PutIn(_player);
+        transform.position = _currentCell.GetPosition();
+
     }
 
     public class Direction
@@ -106,6 +123,7 @@ public class Movement : MonoBehaviour
         {
             this.x = x;
             this.y = y;
+
         }
     }
 

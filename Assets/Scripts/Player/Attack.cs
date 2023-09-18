@@ -19,9 +19,9 @@ public class Attack : MonoBehaviour
             Debug.Log("Слабая атака");
             int x = _movement._currentCell.GetArrayX() + _movement.direction.x;
             int y = _movement._currentCell.GetArrayY() + _movement.direction.y;
-            if (EarthGrid.WorldGrid[x, y]._creature != null)
+            if (EarthGrid.Instance._cellGrid[x, y]._creature != null)
             {
-                EarthGrid.WorldGrid[x, y]._creature.TakeDamage(1);
+                EarthGrid.Instance._cellGrid[x, y]._creature.TakeDamage(1);
             }
             else
             {
@@ -37,9 +37,9 @@ public class Attack : MonoBehaviour
             Debug.Log("Сильная атака");
             int x = _movement._currentCell.GetArrayX() + _movement.direction.x;
             int y = _movement._currentCell.GetArrayY() + _movement.direction.y;
-            if (EarthGrid.WorldGrid[x, y]._creature != null)
+            if (EarthGrid.Instance._cellGrid[x, y]._creature != null)
             {
-                EarthGrid.WorldGrid[x, y]._creature.TakeDamage(10);
+                EarthGrid.Instance._cellGrid[x, y]._creature.TakeDamage(10);
             }
             else
             {

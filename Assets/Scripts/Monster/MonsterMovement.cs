@@ -9,13 +9,15 @@ public class MonsterMovement : MonoBehaviour
 
     public void SetPosition(Cell cell)
     {
-        cell.SetPlayer(_monster);
-        _currentPosition = cell;
+        if (cell.PutIn(_monster))
+        {
+            _currentPosition = cell;
+        }
     }
 
     public void LeaveCell()
     {
-        _currentPosition.SetAvalible(true);
+        _currentPosition.SetAvalible();
         _currentPosition = null;
     }
 }

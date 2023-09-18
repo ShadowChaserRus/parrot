@@ -5,6 +5,8 @@ using UnityEngine;
 public class Cell
 {
     public IDamageable _creature { get; private set; }
+    public IPickable _item { get; private set; }
+    public INPC _npc { get; private set; }
     public bool isEmpty { get; private set; } = true;
     private float x;
     private float y;
@@ -20,6 +22,10 @@ public class Cell
     {
         return new Vector2(x, y);
     }
+    public Vector2 GetPosition(bool intt)
+    {
+        return new Vector2(_arrayX, _arrayY);
+    }
 
     public int GetArrayX()
     {
@@ -31,16 +37,58 @@ public class Cell
         return _arrayY;
     }
 
-    public void SetAvalible(bool toggle)
+    public void SetAvalible()
     {
-        isEmpty = toggle;
-        if (toggle) _creature = null;
+        isEmpty = true;
+        _creature = null;
+        _item = null;
+        _npc = null;
+        EarthGrid.Instance.AddEmpty(this);
     }
 
-    public void SetPlayer(IDamageable creature)
+    public bool PutIn(IDamageable creature)
     {
-        _creature = creature;
-        isEmpty = false;
+        if (!isEmpty)
+        {
+            return false;
+        }
+        else
+        {
+            _creature = creature;
+            isEmpty = false;
+            EarthGrid.Instance.RemoveEmpty(this);
+            return true;
+        }
+    }
+
+    public bool PutIn(IPickable item)
+    {
+        if (!isEmpty)
+        {
+            return false;
+        }
+        else
+        {
+            _item = item;
+            isEmpty = false;
+            EarthGrid.Instance.RemoveEmpty(this);
+            return true;
+        }
+    }
+
+    public bool PutIn(INPC npc)
+    {
+        if (!isEmpty)
+        {
+            return false;
+        }
+        else
+        {
+            _npc = npc;
+            isEmpty = false;
+            EarthGrid.Instance.RemoveEmpty(this);
+            return true;
+        }
     }
 
 
